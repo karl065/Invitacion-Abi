@@ -1,6 +1,6 @@
 const Invitacion = () => {
 	return (
-		<div className=" max-w-full border-2 border-black rounded-2xl flex items-center justify-center p-4">
+		<div className="min-w-screen min-h-screen flex items-center justify-center p-4">
 			<div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 max-w-md w-full border-4 border-pink-200 relative overflow-hidden">
 				{/* Decoración de globos */}
 				<div className="absolute -top-8 -left-8 w-32 h-32 bg-pink-300 rounded-full opacity-30 animate-bounce"></div>

@@ -2,8 +2,9 @@ import authenticateUser from './../../services/auth/authenticateUser.js';
 
 const handlerAuthenticate = async (req, res) => {
 	try {
-		const { documento, password } = req.body;
-		const token = await authenticateUser(documento, password);
+		const { email, password } = req.body;
+
+		const token = await authenticateUser(email, password);
 
 		return res.status(200).json(token);
 	} catch (error) {

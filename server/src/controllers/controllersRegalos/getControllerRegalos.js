@@ -9,7 +9,8 @@ const getControllerRegalos = async ({ nombre, seleccionado }) => {
 
 		const regalos = await RegalosModel.find(
 			Object.keys(whereConditions).length > 0 ? whereConditions : {}
-		);
+		).populate('usuarioEncargado');
+
 		return regalos;
 	} catch (error) {
 		return error;

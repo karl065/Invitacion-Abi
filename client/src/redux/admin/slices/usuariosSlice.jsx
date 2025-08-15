@@ -10,20 +10,26 @@ const usuariosSlice = createSlice({
 			state.usuarios = action.payload;
 		},
 		actualizarUsuario: (state, action) => {
-			const { _id, data } = action.payload;
+			const nuevoUsuario = action.payload;
 
-			const index = state.usuarios.findIndex((usuario) => usuario._id === _id);
+			// Verificar si ya existe en el estado
+			const index = state.usuarios.findIndex(
+				(usuario) => usuario._id === nuevoUsuario._id
+			);
 
 			if (index !== -1) {
+				// Si existe, actualiza
 				state.usuarios[index] = {
 					...state.usuarios[index],
-					...data,
+					...nuevoUsuario,
 				};
+			} else {
+				// Si no existe, lo agrega
+				state.usuarios.push(nuevoUsuario);
 			}
 		},
 	},
 });
 
-export const { cargarUsuarios, cargarPredios, actualizarUsuario } =
-	usuariosSlice.actions;
+export const { cargarUsuarios, actualizarUsuario } = usuariosSlice.actions;
 export default usuariosSlice.reducer;
