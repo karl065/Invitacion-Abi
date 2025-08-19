@@ -38,7 +38,7 @@ function App() {
 	return (
 		<div>
 			<Routes>
-				<Route path="/" element={<Invitacion</Routes></div> />} />
+				<Route path="/" element={<Invitacion />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/admin" element={<LayoutAdmin />}>
 					<Route index element={<HomeAdmin />} />
