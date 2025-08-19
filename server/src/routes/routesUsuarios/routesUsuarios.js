@@ -1,8 +1,8 @@
 import express from 'express';
-import postHandlerUsuario from './../../handlers/handlersUsuarios/postHandlerUsuarios';
-import deleteHandlerUsuario from './../../handlers/handlersUsuarios/deleteHandlerUsuario';
-import putHandlerUsuarios from './../../handlers/handlersUsuarios/putHandlerUsuario';
-import getHandlerUsuarios from './../../handlers/handlersUsuarios/getHandlerUsuario';
+import postHandlerUsuario from './../../handlers/handlersUsuarios/postHandlerUsuarios.js';
+import deleteHandlerUsuario from './../../handlers/handlersUsuarios/deleteHandlerUsuario.js';
+import putHandlerUsuarios from './../../handlers/handlersUsuarios/putHandlerUsuario.js';
+import getHandlerUsuarios from './../../handlers/handlersUsuarios/getHandlerUsuario.js';
 const router = express.Router();
 
 router.post('/', postHandlerUsuario);
