@@ -5,6 +5,7 @@ import router from './routes/indexRoutes.js';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
+import socketMiddle from './Middleware/socketMiddle.js';
 
 const server = express();
 const httpServer = http.createServer(server); // Crea un servidor HTTP
@@ -27,6 +28,8 @@ server.use(
 );
 
 server.use(cors());
+
+server.use(socketMiddle);
 
 server.use(router);
 

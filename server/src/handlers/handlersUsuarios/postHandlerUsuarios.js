@@ -4,7 +4,9 @@ const postHandlerUsuario = async (req, res) => {
 	try {
 		const usuarioNuevo = req.body;
 
-		const usuarioCreado = await postControllerUsuarios(usuarioNuevo);
+		const usuarioCreado = await postControllerUsuarios(usuarioNuevo, req.io);
+
+		req.io.emit('usuarioCreado', usuarioCreado);
 
 		return res.status(200).json(usuarioCreado);
 	} catch (error) {

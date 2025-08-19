@@ -4,8 +4,6 @@ import Tabla from '../../../Components/Tabla/Tabla';
 const HomeAdmin = () => {
 	const usuarios = useSelector((state) => state.usuarios.usuarios);
 
-	console.log(usuarios);
-
 	const columns = [
 		{
 			header: 'Nombre',
@@ -27,6 +25,15 @@ const HomeAdmin = () => {
 			header: 'Asistencia',
 			accessorKey: 'asistencia',
 			cell: ({ getValue }) => (getValue() ? 'Sí' : 'No'),
+		},
+		{
+			header: 'Acompañado',
+			accessorKey: 'solo',
+			cell: ({ getValue }) => (getValue() ? 'Sí' : 'No'),
+		},
+		{
+			header: 'Acompañantes',
+			accessorKey: 'acompanantes',
 		},
 		{
 			header: 'Regalo',

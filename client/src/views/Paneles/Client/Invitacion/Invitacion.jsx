@@ -1,4 +1,20 @@
+import { useState } from 'react';
+import Modal from 'react-modal';
+import Asistencia from '../../../Formularios/Asistencia/Asistencia';
+import StoryTimeline from '../../../Components/StoryTimeLine/StoryTimeLine';
+
+Modal.setAppElement('#root');
+
 const Invitacion = () => {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const mensajes = [
+		'Con mucho amor y alegría te invitamos a un día especial 🌸',
+		'Nuestra princesa Abi llegó antes de lo esperado 💖',
+		'Queremos celebrar contigo este hermoso milagro ✨',
+		'Eres parte importante de nuestra historia ❤️',
+	];
+
 	return (
 		<div className="min-w-screen min-h-screen flex items-center justify-center p-4">
 			<div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 max-w-md w-full border-4 border-pink-200 relative overflow-hidden">
@@ -14,12 +30,8 @@ const Invitacion = () => {
 					🌸 Princesa Abi 🌸
 				</h1>
 
-				{/* Texto principal */}
-				<p className="text-gray-700 mb-6">
-					Con mucho amor y alegría, te invitamos a celebrar la llegada de
-					nuestra hermosa bebé. Ella nació antes de lo esperado, pero llena de
-					fuerza y ternura. 💖
-				</p>
+				{/* Historia dinámica (derecha → izquierda) */}
+				<StoryTimeline mensajes={mensajes} delay={3000} direction="rtl" />
 
 				{/* Detalles del evento */}
 				<div className="bg-pink-100 p-4 rounded-xl shadow-inner mb-6">
@@ -39,12 +51,26 @@ const Invitacion = () => {
 				</p>
 
 				{/* Botón de confirmación */}
-				<a
-					href="https://wa.me/573124868390"
-					target="_blank"
+				<button
+					onClick={() => setIsOpen(true)}
 					className="inline-block bg-pink-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-pink-600 transition">
 					Confirmar asistencia 💌
-				</a>
+				</button>
+				{isOpen && (
+					<div className="fixed inset-0 flex items-center justify-center z-50">
+						<div className="bg-rose-200 rounded-2xl shadow-2xl p-4 w-[90%] max-w-lg relative">
+							{/* Botón cerrar */}
+							<button
+								onClick={() => setIsOpen(false)}
+								className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 font-bold">
+								✕
+							</button>
+
+							{/* Aquí va tu formulario Asistencia */}
+							<Asistencia onClose={() => setIsOpen(false)} />
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);

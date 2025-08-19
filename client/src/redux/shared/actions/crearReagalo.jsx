@@ -1,6 +1,7 @@
 import axios from 'axios';
 import server from '../../../api/conexiones.jsx';
 import { actualizarRegalos } from '../slices/RegalosSlice.jsx';
+import socket from '../../../services/socket.js';
 
 export const agregarRegalo = async (dataRegalo, dispatch) => {
 	try {
@@ -8,11 +9,10 @@ export const agregarRegalo = async (dataRegalo, dispatch) => {
 			`${server.api.baseURL}regalos`,
 			dataRegalo
 		);
-		console.log(data);
 
 		dispatch(actualizarRegalos(data));
 
-		// socket.emit('cargarUsuarios');
+		socket.emit('regaloCreado', data);
 	} catch (error) {
 		console.log(error);
 	}

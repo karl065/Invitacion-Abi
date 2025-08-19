@@ -11,6 +11,8 @@ import HomeAdmin from './views/Paneles/Admin/Home/HomeAdmin.jsx';
 import CrearUsuarios from './views/Formularios/CrearUsuarios/CrearUsuarios.jsx';
 import RegalosAdmin from './views/Paneles/Admin/Regalos/RegalosAdmin.jsx';
 import CrearRegalos from './views/Formularios/CrearRegalos/CrearRegalos.jsx';
+import { adminCargarRegalos } from './redux/shared/actions/cargarRegalos.jsx';
+import useSocketListeners from './hooks/SocketListeners.jsx';
 
 function App() {
 	const dispatch = useDispatch();
@@ -19,13 +21,19 @@ function App() {
 	const token = localStorage.getItem('token');
 
 	useEffect(() => {
-		if (!token) {
-			adminLogoutAction(dispatch, navigate);
-		} else {
-			adminReloginAction(token, dispatch, navigate);
+		adminCargarRegalos(dispatch);
+		// Solo validamos cuando el usuario intente ir al área admin
+		if (window.location.pathname.startsWith('/admin')) {
+			if (!token) {
+				adminLogoutAction(dispatch, navigate);
+			} else {
+				adminReloginAction(token, dispatch, navigate);
+			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useSocketListeners();
 
 	return (
 		<div>

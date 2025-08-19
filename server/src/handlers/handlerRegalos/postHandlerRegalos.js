@@ -5,6 +5,7 @@ const postHandlerRegalos = async (req, res) => {
 		const regaloNuevo = req.body;
 
 		const regaloCreado = await postControllerRegalos(regaloNuevo);
+		req.io.emit('regaloCreado', regaloCreado);
 
 		return res.status(200).json(regaloCreado);
 	} catch (error) {
