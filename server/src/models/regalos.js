@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import connection from '../config/DBConnection';
+import connection from '../config/DBConnection.js';
 
 const RegalosSchema = new mongoose.Schema({
 	nombre: {
