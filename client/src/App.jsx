@@ -1,6 +1,5 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
-import { Invitacion } from './views/Paneles/Client/indexClient.jsx';
 import Login from './views/Formularios/Login/Login.jsx';
 import LayoutAdmin from './views/Components/LayoutAdmin/LayoutAdmin.jsx';
 import { useEffect } from 'react';
@@ -13,6 +12,7 @@ import RegalosAdmin from './views/Paneles/Admin/Regalos/RegalosAdmin.jsx';
 import CrearRegalos from './views/Formularios/CrearRegalos/CrearRegalos.jsx';
 import { adminCargarRegalos } from './redux/shared/actions/cargarRegalos.jsx';
 import useSocketListeners from './hooks/SocketListeners.jsx';
+import Invitacion from './views/Paneles/Client/Invitacion/Invitacion.jsx';
 
 function App() {
 	const dispatch = useDispatch();
@@ -38,7 +38,7 @@ function App() {
 	return (
 		<div>
 			<Routes>
-				<Route path="/" element={<Invitacion />} />
+				<Route path="/" element={<Invitacion</Routes></div> />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/admin" element={<LayoutAdmin />}>
 					<Route index element={<HomeAdmin />} />
