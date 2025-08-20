@@ -1,75 +1,149 @@
-import { useEffect, useState, useRef } from 'react';
+// StoryTimeline.jsx
 import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import angeles from '../../../audios/angeles_fuimos.mp3';
 
-const StoryTimeline = ({
-	mensajes = [],
-	delay = 3000, // tiempo entre mensajes
-	direction = 'rtl', // "rtl" (derecha→izquierda) o "ltr"
-	autoPlay = true,
-	pauseOnHover = true,
-	className = '',
-}) => {
+const storyEvents = [
+	{
+		title: 'El inicio',
+		cardTitle: 'Una guerrera nace',
+		cardSubtitle: 'Semana 28 - Llegada inesperada',
+		media: {
+			type: 'IMAGE',
+			source: {
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755641395/InvitacionAbi/Bra_en_la_encubadora_xrwste.png',
+			},
+		},
+		story:
+			'Como toda guerrera Saiyajin, llegó antes de lo esperado, lista para luchar por su vida.',
+	},
+	{
+		title: 'La batalla en la incubadora',
+		cardTitle: 'Fuerza Saiyajin',
+		cardSubtitle: 'Días de recuperación',
+		media: {
+			type: 'IMAGE',
+			source: {
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755646632/InvitacionAbi/Bra_Guerrera_bebe_sin_fondo_zjoqgr.png',
+			},
+		},
+		story:
+			'Enfrentó cada día en la incubadora como un entrenamiento en la sala del tiempo, fortaleciendo su espíritu.',
+	},
+	{
+		title: 'Victoria',
+		cardTitle: 'La guerrera sale adelante',
+		cardSubtitle: 'Alta médica',
+		media: {
+			type: 'IMAGE',
+			source: {
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755646809/InvitacionAbi/Bra_victoria_sin_fondo_svxug3.png',
+			},
+		},
+		story:
+			'Después de días de batalla, nuestra pequeña Saiyajin logró lo imposible: ir a casa con nosotros.',
+	},
+	{
+		title: 'En casa',
+		cardTitle: 'Nuestra princesa Saiyajin',
+		cardSubtitle: 'La unión familiar',
+		media: {
+			type: 'IMAGE',
+			source: {
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755641394/InvitacionAbi/Bra_en_familia_zauwz3.png',
+			},
+		},
+		story:
+			'Ahora, con su armadura invisible y su poder oculto, nos llena de amor y orgullo cada día.',
+	},
+];
+
+const positions = ['text-first', 'image-first'];
+
+const StoryTimeline = () => {
 	const [index, setIndex] = useState(0);
-	const timerRef = useRef(null);
+	const [position, setPosition] = useState('image-first');
 
-	const hasMessages = Array.isArray(mensajes) && mensajes.length > 0;
-	if (!hasMessages) return null;
-
-	const startX = direction === 'rtl' ? '100%' : '-100%';
-	const exitX = direction === 'rtl' ? '-100%' : '100%';
-
-	const startAuto = () => {
-		if (!autoPlay || mensajes.length <= 1) return;
-		clearInterval(timerRef.current);
-		timerRef.current = setInterval(() => {
-			setIndex((prev) => (prev + 1) % mensajes.length);
-		}, delay);
-	};
-
-	const stopAuto = () => {
-		clearInterval(timerRef.current);
-	};
+	// Ref para el audio
+	const audioRef = useRef(null);
 
 	useEffect(() => {
-		startAuto();
-		return () => stopAuto();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [delay, autoPlay, mensajes.length]);
+		// Iniciar la canción al montar el componente
+		if (audioRef.current) {
+			audioRef.current.play().catch(() => {
+				// En algunos navegadores autoplay requiere interacción
+				console.log('Necesaria interacción para reproducir audio.');
+			});
+		}
 
-	const handleMouseEnter = () => pauseOnHover && stopAuto();
-	const handleMouseLeave = () => pauseOnHover && startAuto();
+		const interval = setInterval(() => {
+			setIndex((prev) => (prev + 1) % storyEvents.length);
+			const randomPos = positions[Math.floor(Math.random() * positions.length)];
+			setPosition(randomPos);
+		}, 10000); // 10 segundos por escena
+
+		return () => clearInterval(interval);
+	}, []);
+
+	const current = storyEvents[index];
+
+	// Componente de texto animado
+	const TextContent = () => (
+		<motion.div
+			key={index + position}
+			className="max-w-xs md:max-w-md text-center text-white p-3 mx-auto"
+			initial={{ opacity: 0, y: 30 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: -30 }}
+			transition={{ duration: 1.5 }}>
+			<h2 className="text-lg md:text-2xl font-bold mb-2 text-pink-400 text-shadow-fuchsia-700">
+				{current.title}
+			</h2>
+			<h3 className="text-base md:text-xl mb-1 text-pink-800">
+				{current.cardTitle}
+			</h3>
+			<h4 className="text-sm md:text-lg mb-2 text-orange-200">
+				{current.cardSubtitle}
+			</h4>
+			<p className="text-xs md:text-sm">{current.story}</p>
+		</motion.div>
+	);
+
+	// Componente de imagen animada
+	const ImageContent = () => (
+		<motion.img
+			key={current.media.source.url}
+			src={current.media.source.url}
+			alt={current.cardTitle}
+			className="w-full max-w-3xl mx-auto object-contain rounded-xl"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 1.5 }}
+		/>
+	);
 
 	return (
-		<div
-			className={`h-28 md:h-32 flex items-center justify-center overflow-hidden ${className}`}
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}>
-			<AnimatePresence mode="wait">
-				<motion.p
-					key={index}
-					initial={{ x: startX, opacity: 0 }}
-					animate={{ x: 0, opacity: 1 }}
-					exit={{ x: exitX, opacity: 0 }}
-					transition={{ duration: 0.9 }}
-					className="text-center text-lg md:text-xl text-gray-700 font-semibold px-4">
-					{mensajes[index]}
-				</motion.p>
-			</AnimatePresence>
+		<>
+			{/* Audio */}
+			<audio ref={audioRef} src={angeles} loop />
 
-			{/* Controles opcionales (prev/next) */}
-			<div className="absolute inset-x-0 bottom-1 flex items-center justify-center gap-2">
-				{mensajes.map((_, i) => (
-					<button
-						key={i}
-						aria-label={`Mensaje ${i + 1}`}
-						onClick={() => setIndex(i)}
-						className={`w-2.5 h-2.5 rounded-full transition ${
-							i === index ? 'bg-pink-500 scale-110' : 'bg-pink-200'
-						}`}
-					/>
-				))}
-			</div>
-		</div>
+			<AnimatePresence mode="wait">
+				<div key={index} className="flex flex-col items-center gap-4">
+					{position === 'text-first' ? (
+						<>
+							<TextContent />
+							<ImageContent />
+						</>
+					) : (
+						<>
+							<ImageContent />
+							<TextContent />
+						</>
+					)}
+				</div>
+			</AnimatePresence>
+		</>
 	);
 };
 

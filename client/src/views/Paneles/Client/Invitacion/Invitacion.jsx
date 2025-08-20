@@ -8,16 +8,9 @@ Modal.setAppElement('#root');
 const Invitacion = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
-	const mensajes = [
-		'Con mucho amor y alegría te invitamos a un día especial 🌸',
-		'Nuestra princesa Abi llegó antes de lo esperado 💖',
-		'Queremos celebrar contigo este hermoso milagro ✨',
-		'Eres parte importante de nuestra historia ❤️',
-	];
-
 	return (
-		<div className="min-w-screen min-h-screen flex items-center justify-center p-4">
-			<div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 max-w-md w-full border-4 border-pink-200 relative overflow-hidden">
+		<div className="min-w-screen min-h-screen flex items-center justify-center ">
+			<div className="bg-violet-300 rounded-2xl shadow-lg space-y-2 p-6 md:p-10 max-w-md w- border-4 border-pink-200 relative overflow-hidden">
 				{/* Decoración de globos */}
 				<div className="absolute -top-8 -left-8 w-32 h-32 bg-pink-300 rounded-full opacity-30 animate-bounce"></div>
 				<div className="absolute -bottom-10 -right-10 w-40 h-40 bg-pink-200 rounded-full opacity-30 animate-pulse"></div>
@@ -29,27 +22,29 @@ const Invitacion = () => {
 				<h1 className="text-3xl md:text-4xl font-bold text-pink-600 mb-4">
 					🌸 Princesa Abi 🌸
 				</h1>
+				<div className="flex space-x-2">
+					{/* Historia dinámica (derecha → izquierda) */}
+					<div className="shadow-2xl rounded-xl">
+						<StoryTimeline />
+					</div>
+					<div>
+						{/* Detalles del evento */}
+						<div className=" p-4 rounded-xl shadow-2xl mb-6">
+							<p className="text-lg font-semibold text-pink-700">📅 Fecha:</p>
+							<p className="mb-3">Domingo, 25 de agosto 2025</p>
 
-				{/* Historia dinámica (derecha → izquierda) */}
-				<StoryTimeline mensajes={mensajes} delay={3000} direction="rtl" />
+							<p className="text-lg font-semibold text-pink-700">📍 Lugar:</p>
+							<p className="mb-3">Salón Social Los Almendros</p>
 
-				{/* Detalles del evento */}
-				<div className="bg-pink-100 p-4 rounded-xl shadow-inner mb-6">
-					<p className="text-lg font-semibold text-pink-700">📅 Fecha:</p>
-					<p className="mb-3">Domingo, 25 de agosto 2025</p>
-
-					<p className="text-lg font-semibold text-pink-700">📍 Lugar:</p>
-					<p className="mb-3">Salón Social Los Almendros</p>
-
-					<p className="text-lg font-semibold text-pink-700">⏰ Hora:</p>
-					<p>3:00 PM</p>
+							<p className="text-lg font-semibold text-pink-700">⏰ Hora:</p>
+							<p>3:00 PM</p>
+						</div>
+					</div>
 				</div>
-
 				{/* Mensaje final */}
 				<p className="text-sm text-gray-500 italic mb-4">
 					“Un pedacito de cielo llegó a nuestras vidas.”
 				</p>
-
 				{/* Botón de confirmación */}
 				<button
 					onClick={() => setIsOpen(true)}
