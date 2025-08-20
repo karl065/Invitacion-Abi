@@ -66,13 +66,13 @@ const StoryTimeline = () => {
 
 	// Ref para el audio
 	const audioRef = useRef(null);
+	const [showPlayButton, setShowPlayButton] = useState(false);
 
 	useEffect(() => {
-		// Iniciar la canción al montar el componente
+		// Intentar reproducir automáticamente
 		if (audioRef.current) {
 			audioRef.current.play().catch(() => {
-				// En algunos navegadores autoplay requiere interacción
-				console.log('Necesaria interacción para reproducir audio.');
+				setShowPlayButton(true); // Mostrar botón si el navegador bloquea autoplay
 			});
 		}
 
@@ -84,6 +84,13 @@ const StoryTimeline = () => {
 
 		return () => clearInterval(interval);
 	}, []);
+
+	const handlePlayAudio = () => {
+		if (audioRef.current) {
+			audioRef.current.play();
+			setShowPlayButton(false); // Ocultar botón al reproducir
+		}
+	};
 
 	const current = storyEvents[index];
 
@@ -127,6 +134,17 @@ const StoryTimeline = () => {
 		<>
 			{/* Audio */}
 			<audio ref={audioRef} src={angeles} loop />
+
+			{/* Botón para reproducir si autoplay falla */}
+			{showPlayButton && (
+				<div className="text-center mb-4">
+					<button
+						className="p-2 bg-pink-500 text-white rounded hover:bg-pink-600 transition"
+						onClick={handlePlayAudio}>
+						▶ Escuchar música
+					</button>
+				</div>
+			)}
 
 			<AnimatePresence mode="wait">
 				<div key={index} className="flex flex-col items-center gap-4">
