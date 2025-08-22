@@ -52,7 +52,7 @@ const Asistencia = ({ onClose }) => {
 	});
 
 	return (
-		<div className="w-full h-full flex items-center text-2xl justify-center px-4 sm:px-6 lg:px-8">
+		<div className="w-full h-full flex items-center text-4xl justify-center px-4 sm:px-6 lg:px-8">
 			<div className="w-full max-w-2xl items-center justify-center p-4 sm:p-6 space-y-4 rounded-lg shadow-2xl ">
 				<form className="space-y-6" onSubmit={formik.handleSubmit}>
 					{/* Nombre y Apellido */}
@@ -62,7 +62,7 @@ const Asistencia = ({ onClose }) => {
 								type="text"
 								name="nombre"
 								id="nombre"
-								className={`block w-full text-2xl form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg  ${
+								className={`block w-full text-4xl form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg  ${
 									formik.touched.nombre && formik.errors.nombre
 										? 'border-red-500'
 										: ''
@@ -81,7 +81,7 @@ const Asistencia = ({ onClose }) => {
 								type="text"
 								name="apellido"
 								id="apellido"
-								className={`block w-full text-2xl form-input p-2 shadow-violet-600 shadow-2xl rounded-lg border-none bg-transparent${
+								className={`block w-full text-4xl form-input p-2 shadow-violet-600 shadow-2xl rounded-lg border-none bg-transparent${
 									formik.touched.apellido && formik.errors.apellido
 										? 'border-red-500'
 										: ''
@@ -106,7 +106,7 @@ const Asistencia = ({ onClose }) => {
 								type="email"
 								name="email"
 								id="email"
-								className={`block w-full text-2xl form-input p-2 shadow-violet-600 shadow-2xl rounded-lg bg-transparent border-none ${
+								className={`block w-full text-4xl form-input p-2 shadow-violet-600 shadow-2xl rounded-lg bg-transparent border-none ${
 									formik.touched.email && formik.errors.email
 										? 'border-red-500'
 										: ''
@@ -125,7 +125,7 @@ const Asistencia = ({ onClose }) => {
 								type="text"
 								name="celular"
 								id="celular"
-								className={`block w-full text-2xl form-input p-2 rounded-lg shadow-violet-600 shadow-2xl border-none bg-transparent ${
+								className={`block w-full text-4xl form-input p-2 rounded-lg shadow-violet-600 shadow-2xl border-none bg-transparent ${
 									formik.touched.celular && formik.errors.celular
 										? 'border-red-500'
 										: ''
@@ -224,7 +224,7 @@ const Asistencia = ({ onClose }) => {
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									value={formik.values.acompanantes}
-									className={`block w-full text-2xl form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
+									className={`block w-full text-4xl form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
 										formik.touched.acompanantes && formik.errors.acompanantes
 											? 'border-red-500'
 											: ''
@@ -249,7 +249,7 @@ const Asistencia = ({ onClose }) => {
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							value={formik.values.regalos}
-							className={`block w-full text-2xl font-bold form-select p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
+							className={`block w-full text-4xl font-bold form-select p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
 								formik.touched.regalos && formik.errors.regalos
 									? 'border-red-500'
 									: ''
@@ -272,7 +272,7 @@ const Asistencia = ({ onClose }) => {
 					<div className="flex items-center justify-center">
 						<button
 							type="submit"
-							className="w-full text-xl sm:w-auto px-6 py-2 font-bold shadow-violet-600 shadow-2xl border-none bg-violet-600 text-pink-300 transition-colors rounded-lg  hover:text-gray-100">
+							className="w-full text-4xl sm:w-auto px-6 py-2 font-bold shadow-violet-600 shadow-2xl border-none bg-violet-600 text-pink-300 transition-colors rounded-lg  hover:text-gray-100">
 							Confirmar Asistencia
 						</button>
 					</div>

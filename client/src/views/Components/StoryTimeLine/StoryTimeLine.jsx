@@ -91,14 +91,19 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 
 	// Ref para el audio
 	const audioRef = useRef(null);
-	const [showPlayButton, setShowPlayButton] = useState(false);
+	const [isPlaying, setIsPlaying] = useState(false);
 
 	useEffect(() => {
 		// Intentar reproducir automáticamente
 		if (audioRef.current) {
-			audioRef.current.play().catch(() => {
-				setShowPlayButton(true); // Mostrar botón si el navegador bloquea autoplay
-			});
+			audioRef.current
+				.play()
+				.then(() => {
+					setIsPlaying(true);
+				})
+				.catch(() => {
+					setIsPlaying(false); // Autoplay bloqueado → botón visible
+				});
 		}
 
 		const interval = setInterval(() => {
@@ -124,10 +129,15 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 		return () => clearInterval(interval);
 	}, [hasCompletedFirstLoop, onFinishFirstLoop]);
 
-	const handlePlayAudio = () => {
-		if (audioRef.current) {
-			audioRef.current.play();
-			setShowPlayButton(false); // Ocultar botón al reproducir
+	const toggleAudio = () => {
+		if (!audioRef.current) return;
+		if (isPlaying) {
+			audioRef.current.pause();
+			setIsPlaying(false);
+		} else {
+			audioRef.current.play().then(() => {
+				setIsPlaying(true);
+			});
 		}
 	};
 
@@ -200,16 +210,15 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 			{/* Audio */}
 			<audio ref={audioRef} src={angeles} loop />
 
-			{/* Botón para reproducir si autoplay falla */}
-			{showPlayButton && (
-				<div className="text-center mb-4">
-					<button
-						className="fixed top-4 right-4 z-50 p-3 rounded-full bg-black/60 text-white shadow-lg hover:bg-black/80 transition"
-						onClick={handlePlayAudio}>
-						▶ Escuchar música
-					</button>
-				</div>
-			)}
+			{/* 🎛 Botón fijo Play / Pause */}
+			<div className="text-center mb-4">
+				<button
+					className="fixed top-4 right-4 z-50 p-3 rounded-full bg-black/60 text-white shadow-lg hover:bg-black/80 transition"
+					onClick={toggleAudio}>
+					{isPlaying ? '⏸ Pausar música' : '▶ Reproducir música'}
+				</button>
+			</div>
+
 			<div className="flex items-center justify-center">
 				<AnimatePresence mode="wait">
 					<div key={index} className="flex flex-col items-center gap-4">

@@ -44,13 +44,13 @@ const Invitacion = () => {
 					<>
 						<DetallesEvento />
 						{/* Mensaje final */}
-						<p className="text-xl text-violet-500 italic mb-4">
+						<p className="text-4xl text-violet-500 italic mb-4">
 							“Un pedacito de cielo llegó a nuestras vidas.”
 						</p>
 						{/* Botón de confirmación */}
 						<button
 							onClick={() => setIsOpen(true)}
-							className="inline-block bg-pink-500 text-white p-2 text-2xl rounded-full shadow-md hover:bg-pink-600 transition">
+							className="inline-block bg-pink-500 text-white p-2 text-4xl rounded-full shadow-md hover:bg-pink-600 transition">
 							Confirmar asistencia 💌
 						</button>
 					</>
