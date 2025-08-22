@@ -60,9 +60,10 @@ const storyEvents = [
 
 const positions = ['text-first', 'image-first'];
 
-const StoryTimeline = () => {
+const StoryTimeline = ({ onFinishFirstLoop }) => {
 	const [index, setIndex] = useState(0);
 	const [position, setPosition] = useState('image-first');
+	const [hasCompletedFirstLoop, setHasCompletedFirstLoop] = useState(false);
 
 	// Ref para el audio
 	const audioRef = useRef(null);
@@ -77,13 +78,24 @@ const StoryTimeline = () => {
 		}
 
 		const interval = setInterval(() => {
-			setIndex((prev) => (prev + 1) % storyEvents.length);
+			setIndex((prev) => {
+				const next = (prev + 1) % storyEvents.length;
+
+				// Si termina la vuelta por primera vez
+				if (next === 0 && !hasCompletedFirstLoop) {
+					setHasCompletedFirstLoop(true);
+					if (onFinishFirstLoop) onFinishFirstLoop(); // Avisar al padre
+				}
+
+				return next;
+			});
+
 			const randomPos = positions[Math.floor(Math.random() * positions.length)];
 			setPosition(randomPos);
-		}, 10000); // 10 segundos por escena
+		}, 10000);
 
 		return () => clearInterval(interval);
-	}, []);
+	}, [hasCompletedFirstLoop, onFinishFirstLoop]);
 
 	const handlePlayAudio = () => {
 		if (audioRef.current) {
@@ -106,28 +118,31 @@ const StoryTimeline = () => {
 			<h2 className="text-lg md:text-2xl font-bold mb-2 text-pink-400 text-shadow-fuchsia-700">
 				{current.title}
 			</h2>
-			<h3 className="text-base md:text-xl mb-1 text-pink-800">
+			<h3 className="text-base md:text-xl mb-1 text-pink-600">
 				{current.cardTitle}
 			</h3>
-			<h4 className="text-sm md:text-lg mb-2 text-orange-200">
+			<h4 className="text-sm md:text-lg mb-2 text-violet-600">
 				{current.cardSubtitle}
 			</h4>
-			<p className="text-xs md:text-sm">{current.story}</p>
+			<p className="text-xs md:text-sm text-violet-500">{current.story}</p>
 		</motion.div>
 	);
 
 	// Componente de imagen animada
 	const ImageContent = () => (
-		<motion.img
+		<motion.div
 			key={current.media.source.url}
-			src={current.media.source.url}
-			alt={current.cardTitle}
-			className="w-full max-w-3xl mx-auto object-contain rounded-xl"
+			className="w-full max-w-md h-64 overflow-hidden rounded-xl shadow-md flex items-center justify-center " // 👈 fuerza mismo tamaño
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
-			transition={{ duration: 1.5 }}
-		/>
+			transition={{ duration: 1.5 }}>
+			<img
+				src={current.media.source.url}
+				alt={current.cardTitle}
+				className="w-full h-full object-contain rounded-xl " // 👈 fondo relleno sutil
+			/>
+		</motion.div>
 	);
 
 	return (
@@ -139,7 +154,7 @@ const StoryTimeline = () => {
 			{showPlayButton && (
 				<div className="text-center mb-4">
 					<button
-						className="p-2 bg-pink-500 text-white rounded hover:bg-pink-600 transition"
+						className="fixed top-4 right-4 z-50 p-3 rounded-full bg-black/60 text-white shadow-lg hover:bg-black/80 transition"
 						onClick={handlePlayAudio}>
 						▶ Escuchar música
 					</button>

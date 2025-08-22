@@ -7,6 +7,7 @@ Modal.setAppElement('#root');
 
 const Invitacion = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [showDetails, setShowDetails] = useState(false);
 
 	return (
 		<div className="min-w-screen min-h-screen flex items-center justify-center ">
@@ -25,32 +26,47 @@ const Invitacion = () => {
 				<div className="flex space-x-2">
 					{/* Historia dinámica (derecha → izquierda) */}
 					<div className="shadow-2xl rounded-xl">
-						<StoryTimeline />
-					</div>
-					<div>
-						{/* Detalles del evento */}
-						<div className=" p-4 rounded-xl shadow-2xl mb-6">
-							<p className="text-lg font-semibold text-pink-700">📅 Fecha:</p>
-							<p className="mb-3">Domingo, 25 de agosto 2025</p>
-
-							<p className="text-lg font-semibold text-pink-700">📍 Lugar:</p>
-							<p className="mb-3">Salón Social Los Almendros</p>
-
-							<p className="text-lg font-semibold text-pink-700">⏰ Hora:</p>
-							<p>3:00 PM</p>
-						</div>
+						<StoryTimeline onFinishFirstLoop={() => setShowDetails(true)} />
 					</div>
 				</div>
-				{/* Mensaje final */}
-				<p className="text-sm text-gray-500 italic mb-4">
-					“Un pedacito de cielo llegó a nuestras vidas.”
-				</p>
-				{/* Botón de confirmación */}
-				<button
-					onClick={() => setIsOpen(true)}
-					className="inline-block bg-pink-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-pink-600 transition">
-					Confirmar asistencia 💌
-				</button>
+
+				{showDetails && (
+					<>
+						<div className="flex ">
+							{/* Detalles del evento */}
+							<div className="flex p-4 rounded-xl shadow-2xl mb-6">
+								<div>
+									<p className="text-lg font-semibold text-pink-700">
+										📅 Fecha:
+									</p>
+									<p className="mb-3">Domingo, 25 de agosto 2025</p>
+								</div>
+								<div>
+									<p className="text-lg font-semibold text-pink-700">
+										📍 Lugar:
+									</p>
+									<p className="mb-3">Salón Social Los Almendros</p>
+								</div>
+								<div>
+									<p className="text-lg font-semibold text-pink-700">
+										⏰ Hora:
+									</p>
+									<p>3:00 PM</p>
+								</div>
+							</div>
+						</div>
+						{/* Mensaje final */}
+						<p className="text-sm text-gray-500 italic mb-4">
+							“Un pedacito de cielo llegó a nuestras vidas.”
+						</p>
+						{/* Botón de confirmación */}
+						<button
+							onClick={() => setIsOpen(true)}
+							className="inline-block bg-pink-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-pink-600 transition">
+							Confirmar asistencia 💌
+						</button>
+					</>
+				)}
 				{isOpen && (
 					<div className="fixed inset-0 flex items-center justify-center z-50">
 						<div className="bg-rose-200 rounded-2xl shadow-2xl p-4 w-[90%] max-w-lg relative">
