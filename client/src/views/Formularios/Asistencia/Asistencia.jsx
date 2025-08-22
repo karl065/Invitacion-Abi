@@ -52,8 +52,8 @@ const Asistencia = ({ onClose }) => {
 	});
 
 	return (
-		<div className="w-full h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
-			<div className="w-full max-w-2xl items-center justify-center p-4 sm:p-6 space-y-4 rounded-lg shadow-2xl text-sm">
+		<div className="w-full h-full flex items-center text-2xl justify-center px-4 sm:px-6 lg:px-8">
+			<div className="w-full max-w-2xl items-center justify-center p-4 sm:p-6 space-y-4 rounded-lg shadow-2xl ">
 				<form className="space-y-6" onSubmit={formik.handleSubmit}>
 					{/* Nombre y Apellido */}
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -62,7 +62,7 @@ const Asistencia = ({ onClose }) => {
 								type="text"
 								name="nombre"
 								id="nombre"
-								className={`block w-full form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg  ${
+								className={`block w-full text-2xl form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg  ${
 									formik.touched.nombre && formik.errors.nombre
 										? 'border-red-500'
 										: ''
@@ -73,9 +73,7 @@ const Asistencia = ({ onClose }) => {
 								value={formik.values.nombre}
 							/>
 							{formik.touched.nombre && formik.errors.nombre && (
-								<div className="text-xs text-red-500 mt-1">
-									{formik.errors.nombre}
-								</div>
+								<div className=" text-red-500 mt-1">{formik.errors.nombre}</div>
 							)}
 						</div>
 						<div className="relative">
@@ -83,7 +81,7 @@ const Asistencia = ({ onClose }) => {
 								type="text"
 								name="apellido"
 								id="apellido"
-								className={`block w-full form-input p-2 shadow-violet-600 shadow-2xl rounded-lg border-none bg-transparent${
+								className={`block w-full text-2xl form-input p-2 shadow-violet-600 shadow-2xl rounded-lg border-none bg-transparent${
 									formik.touched.apellido && formik.errors.apellido
 										? 'border-red-500'
 										: ''
@@ -94,7 +92,7 @@ const Asistencia = ({ onClose }) => {
 								value={formik.values.apellido}
 							/>
 							{formik.touched.apellido && formik.errors.apellido && (
-								<div className="text-xs text-red-500 mt-1">
+								<div className=" text-red-500 mt-1">
 									{formik.errors.apellido}
 								</div>
 							)}
@@ -108,7 +106,7 @@ const Asistencia = ({ onClose }) => {
 								type="email"
 								name="email"
 								id="email"
-								className={`block w-full form-input p-2 shadow-violet-600 shadow-2xl rounded-lg bg-transparent border-none ${
+								className={`block w-full text-2xl form-input p-2 shadow-violet-600 shadow-2xl rounded-lg bg-transparent border-none ${
 									formik.touched.email && formik.errors.email
 										? 'border-red-500'
 										: ''
@@ -119,9 +117,7 @@ const Asistencia = ({ onClose }) => {
 								value={formik.values.email}
 							/>
 							{formik.touched.email && formik.errors.email && (
-								<div className="text-xs text-red-500 mt-1">
-									{formik.errors.email}
-								</div>
+								<div className=" text-red-500 mt-1">{formik.errors.email}</div>
 							)}
 						</div>
 						<div className="relative">
@@ -129,7 +125,7 @@ const Asistencia = ({ onClose }) => {
 								type="text"
 								name="celular"
 								id="celular"
-								className={`block w-full form-input p-2 rounded-lg shadow-violet-600 shadow-2xl border-none bg-transparent ${
+								className={`block w-full text-2xl form-input p-2 rounded-lg shadow-violet-600 shadow-2xl border-none bg-transparent ${
 									formik.touched.celular && formik.errors.celular
 										? 'border-red-500'
 										: ''
@@ -140,7 +136,7 @@ const Asistencia = ({ onClose }) => {
 								value={formik.values.celular}
 							/>
 							{formik.touched.celular && formik.errors.celular && (
-								<div className="text-xs text-red-500 mt-1">
+								<div className=" text-red-500 mt-1">
 									{formik.errors.celular}
 								</div>
 							)}
@@ -149,9 +145,7 @@ const Asistencia = ({ onClose }) => {
 
 					{/* Asistencia */}
 					<div className="relative">
-						<label className="block text-sm font-medium text-gray-700">
-							¿Asistirá?
-						</label>
+						<label className="block  font-bold text-gray-700">¿Asistirá?</label>
 						<div className="flex flex-wrap gap-4 mt-2">
 							<label className="flex items-center gap-2">
 								<input
@@ -177,7 +171,7 @@ const Asistencia = ({ onClose }) => {
 							</label>
 						</div>
 						{formik.touched.asistencia && formik.errors.asistencia && (
-							<div className="text-xs text-red-500 mt-1">
+							<div className=" text-red-500 mt-1">
 								{formik.errors.asistencia}
 							</div>
 						)}
@@ -186,7 +180,7 @@ const Asistencia = ({ onClose }) => {
 					{/* Solo o acompañado */}
 					{formik.values.asistencia === true && (
 						<div className="relative">
-							<label className="block text-sm font-medium text-gray-700">
+							<label className="block font-bold text-gray-700">
 								¿Asistirá solo?
 							</label>
 							<div className="flex flex-wrap gap-4 mt-2">
@@ -212,9 +206,7 @@ const Asistencia = ({ onClose }) => {
 								</label>
 							</div>
 							{formik.touched.solo && formik.errors.solo && (
-								<div className="text-xs text-red-500 mt-1">
-									{formik.errors.solo}
-								</div>
+								<div className="text-red-500 mt-1">{formik.errors.solo}</div>
 							)}
 						</div>
 					)}
@@ -223,7 +215,7 @@ const Asistencia = ({ onClose }) => {
 					{formik.values.solo === false &&
 						formik.values.asistencia === true && (
 							<div className="relative">
-								<label className="block text-sm font-medium text-gray-700">
+								<label className="block  font-bold text-gray-700">
 									¿Cuántos acompañantes?
 								</label>
 								<input
@@ -232,14 +224,14 @@ const Asistencia = ({ onClose }) => {
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									value={formik.values.acompanantes}
-									className={`block w-full form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
+									className={`block w-full text-2xl form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
 										formik.touched.acompanantes && formik.errors.acompanantes
 											? 'border-red-500'
 											: ''
 									}`}
 								/>
 								{formik.touched.acompanantes && formik.errors.acompanantes && (
-									<div className="text-xs text-red-500 mt-1">
+									<div className=" text-red-500 mt-1">
 										{formik.errors.acompanantes}
 									</div>
 								)}
@@ -248,7 +240,7 @@ const Asistencia = ({ onClose }) => {
 
 					{/* Regalos */}
 					<div className="relative">
-						<label className="block text-sm font-medium text-gray-700">
+						<label className="block  font-bold text-gray-700">
 							¿Qué regalo llevará?
 						</label>
 						<select
@@ -257,7 +249,7 @@ const Asistencia = ({ onClose }) => {
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							value={formik.values.regalos}
-							className={`block w-full form-select p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
+							className={`block w-full text-2xl font-bold form-select p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
 								formik.touched.regalos && formik.errors.regalos
 									? 'border-red-500'
 									: ''
@@ -272,9 +264,7 @@ const Asistencia = ({ onClose }) => {
 								))}
 						</select>
 						{formik.touched.regalos && formik.errors.regalos && (
-							<div className="text-xs text-red-500 mt-1">
-								{formik.errors.regalos}
-							</div>
+							<div className=" text-red-500 mt-1">{formik.errors.regalos}</div>
 						)}
 					</div>
 
@@ -282,7 +272,7 @@ const Asistencia = ({ onClose }) => {
 					<div className="flex items-center justify-center">
 						<button
 							type="submit"
-							className="w-full sm:w-auto px-6 py-2 font-bold shadow-violet-600 shadow-2xl border-none bg-transparent uppercase transition-colors rounded-lg  hover:text-gray-100">
+							className="w-full text-xl sm:w-auto px-6 py-2 font-bold shadow-violet-600 shadow-2xl border-none bg-violet-600 text-pink-300 transition-colors rounded-lg  hover:text-gray-100">
 							Confirmar Asistencia
 						</button>
 					</div>

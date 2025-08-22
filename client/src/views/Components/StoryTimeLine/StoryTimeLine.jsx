@@ -87,6 +87,7 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 	const [index, setIndex] = useState(0);
 	const [position, setPosition] = useState('image-first');
 	const [hasCompletedFirstLoop, setHasCompletedFirstLoop] = useState(false);
+	const [finished, setFinished] = useState(false);
 
 	// Ref para el audio
 	const audioRef = useRef(null);
@@ -102,15 +103,18 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 
 		const interval = setInterval(() => {
 			setIndex((prev) => {
-				const next = (prev + 1) % storyEvents.length;
-
+				if (prev < storyEvents.length - 1) {
+					return prev + 1;
+				}
 				// Si termina la vuelta por primera vez
-				if (next === 0 && !hasCompletedFirstLoop) {
+				if (!hasCompletedFirstLoop) {
 					setHasCompletedFirstLoop(true);
 					if (onFinishFirstLoop) onFinishFirstLoop(); // Avisar al padre
 				}
 
-				return next;
+				clearInterval(interval); // detener al llegar al final
+				setTimeout(() => setFinished(true), 10000);
+				return prev;
 			});
 
 			const randomPos = positions[Math.floor(Math.random() * positions.length)];
@@ -131,6 +135,8 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 
 	// Componente de texto animado
 	const TextContent = () => {
+		if (finished || index === storyEvents.length - 1) return null;
+
 		const isFirst = index === 0; // 👈 Verificamos si es la primera escena
 
 		return (
@@ -165,7 +171,7 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 				<h4 className="text-5xl md:text-5xl mb-2 text-violet-600">
 					{current.cardSubtitle}
 				</h4>
-				<p className="text-3xl md:text-3xl font-bold text-violet-500">
+				<p className="text-5xl md:text-5xl font-bold text-violet-500">
 					{current.story}
 				</p>
 			</motion.div>

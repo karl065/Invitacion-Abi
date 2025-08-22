@@ -40,6 +40,21 @@ const Invitacion = () => {
 				{/* Decoración de globos */}
 				<div className="absolute -top-8 -left-8 w-32 h-32 bg-pink-300 rounded-full opacity-30 animate-bounce"></div>
 
+				{showDetails && (
+					<>
+						<DetallesEvento />
+						{/* Mensaje final */}
+						<p className="text-xl text-violet-500 italic mb-4">
+							“Un pedacito de cielo llegó a nuestras vidas.”
+						</p>
+						{/* Botón de confirmación */}
+						<button
+							onClick={() => setIsOpen(true)}
+							className="inline-block bg-pink-500 text-white p-2 text-2xl rounded-full shadow-md hover:bg-pink-600 transition">
+							Confirmar asistencia 💌
+						</button>
+					</>
+				)}
 				<div className="flex space-x-2 justify-center">
 					{/* Historia dinámica (derecha → izquierda) */}
 					<div className="shadow-2xl rounded-xl flex items-center justify-center">
@@ -47,21 +62,6 @@ const Invitacion = () => {
 					</div>
 				</div>
 
-				{showDetails && (
-					<>
-						<DetallesEvento />
-						{/* Mensaje final */}
-						<p className="text-sm text-gray-500 italic mb-4">
-							“Un pedacito de cielo llegó a nuestras vidas.”
-						</p>
-						{/* Botón de confirmación */}
-						<button
-							onClick={() => setIsOpen(true)}
-							className="inline-block bg-pink-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-pink-600 transition">
-							Confirmar asistencia 💌
-						</button>
-					</>
-				)}
 				{isOpen && (
 					<div className="fixed inset-0 flex items-center justify-center z-50">
 						<div className="bg-rose-200 rounded-2xl shadow-2xl p-4 w-[90%] max-w-lg relative">
