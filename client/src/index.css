@@ -1,3 +1,8 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
+
+@theme {
+	--font-tangerine: 'Tangerine', cursive;
+}

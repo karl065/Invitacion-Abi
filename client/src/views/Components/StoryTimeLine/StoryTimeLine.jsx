@@ -5,6 +5,16 @@ import angeles from '../../../audios/angeles_fuimos.mp3';
 
 const storyEvents = [
 	{
+		title: 'Bienvenida',
+		cardTitle: 'Princesa Abi',
+		media: {
+			type: 'IMAGE',
+			source: {
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755836723/InvitacionAbi/Bra_bebe_en_la_nube_voladora_kr0rig.png',
+			},
+		},
+	},
+	{
 		title: 'El inicio',
 		cardTitle: 'Una guerrera nace',
 		cardSubtitle: 'Semana 28 - Llegada inesperada',
@@ -24,20 +34,20 @@ const storyEvents = [
 		media: {
 			type: 'IMAGE',
 			source: {
-				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755646632/InvitacionAbi/Bra_Guerrera_bebe_sin_fondo_zjoqgr.png',
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755839149/InvitacionAbi/Bra_guerrera_ki_rosado_ioc74u.png',
 			},
 		},
 		story:
 			'Enfrentó cada día en la incubadora como un entrenamiento en la sala del tiempo, fortaleciendo su espíritu.',
 	},
 	{
-		title: 'Victoria',
+		title: '¡Victoria!',
 		cardTitle: 'La guerrera sale adelante',
 		cardSubtitle: 'Alta médica',
 		media: {
 			type: 'IMAGE',
 			source: {
-				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755646809/InvitacionAbi/Bra_victoria_sin_fondo_svxug3.png',
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755838210/InvitacionAbi/Bra_victoria_editada_cvy1e3.png',
 			},
 		},
 		story:
@@ -50,11 +60,24 @@ const storyEvents = [
 		media: {
 			type: 'IMAGE',
 			source: {
-				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755641394/InvitacionAbi/Bra_en_familia_zauwz3.png',
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755840580/InvitacionAbi/Bra_en_familia_sin_fondo_union_u3kueu.png',
 			},
 		},
 		story:
 			'Ahora, con su armadura invisible y su poder oculto, nos llena de amor y orgullo cada día.',
+	},
+	{
+		title: 'Estas Invitad@',
+		cardTitle: 'A compartir con mis papitos',
+		cardSubtitle: 'La gran bendición de mi bienvenida',
+		media: {
+			type: 'IMAGE',
+			source: {
+				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755836723/InvitacionAbi/Bra_bebe_sin_fondo_ypkl9l.png',
+			},
+		},
+		story:
+			'Acompañalos a disfrutar de este gran dia, en donde celebran mi !Victoria¡, Ellos te esperan, Confirma enseguida y apoyanos con un detalle...',
 	},
 ];
 
@@ -107,26 +130,47 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 	const current = storyEvents[index];
 
 	// Componente de texto animado
-	const TextContent = () => (
-		<motion.div
-			key={index + position}
-			className="max-w-xs md:max-w-md text-center text-white p-3 mx-auto"
-			initial={{ opacity: 0, y: 30 }}
-			animate={{ opacity: 1, y: 0 }}
-			exit={{ opacity: 0, y: -30 }}
-			transition={{ duration: 1.5 }}>
-			<h2 className="text-lg md:text-2xl font-bold mb-2 text-pink-400 text-shadow-fuchsia-700">
-				{current.title}
-			</h2>
-			<h3 className="text-base md:text-xl mb-1 text-pink-600">
-				{current.cardTitle}
-			</h3>
-			<h4 className="text-sm md:text-lg mb-2 text-violet-600">
-				{current.cardSubtitle}
-			</h4>
-			<p className="text-xs md:text-sm text-violet-500">{current.story}</p>
-		</motion.div>
-	);
+	const TextContent = () => {
+		const isFirst = index === 0; // 👈 Verificamos si es la primera escena
+
+		return (
+			<motion.div
+				key={index + position}
+				className="max-w-xs md:max-w-md text-center p-3 mx-auto"
+				initial={{ opacity: 0, y: 30 }}
+				animate={{ opacity: 1, y: 0 }}
+				exit={{ opacity: 0, y: -30 }}
+				transition={{ duration: 1.5 }}>
+				<div className="flex items-center justify-center">
+					{isFirst && <h1>🌸 </h1>}
+					<h2
+						className={`${
+							isFirst ? 'text-6xl md:text-5xl' : 'text-6xl md:text-5xl'
+						} font-bold mb-2 text-pink-400 text-shadow-fuchsia-700`}>
+						{/* Las 🌸 ahora se verán igual que el texto */}
+						{current.title}
+					</h2>
+					{isFirst && <h1> 🌸</h1>}
+				</div>
+				<div className="flex items-center justify-center">
+					{isFirst && <h1>🌸 </h1>}
+					<h3
+						className={`${
+							isFirst ? 'text-6xl md:text-5xl' : 'text-5xl md:text-4xl'
+						} mb-1 text-pink-600`}>
+						{current.cardTitle}
+					</h3>
+					{isFirst && <h1> 🌸</h1>}
+				</div>
+				<h4 className="text-5xl md:text-5xl mb-2 text-violet-600">
+					{current.cardSubtitle}
+				</h4>
+				<p className="text-3xl md:text-3xl font-bold text-violet-500">
+					{current.story}
+				</p>
+			</motion.div>
+		);
+	};
 
 	// Componente de imagen animada
 	const ImageContent = () => (
@@ -160,22 +204,23 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 					</button>
 				</div>
 			)}
-
-			<AnimatePresence mode="wait">
-				<div key={index} className="flex flex-col items-center gap-4">
-					{position === 'text-first' ? (
-						<>
-							<TextContent />
-							<ImageContent />
-						</>
-					) : (
-						<>
-							<ImageContent />
-							<TextContent />
-						</>
-					)}
-				</div>
-			</AnimatePresence>
+			<div className="flex items-center justify-center">
+				<AnimatePresence mode="wait">
+					<div key={index} className="flex flex-col items-center gap-4">
+						{position === 'text-first' ? (
+							<>
+								<TextContent />
+								<ImageContent />
+							</>
+						) : (
+							<>
+								<ImageContent />
+								<TextContent />
+							</>
+						)}
+					</div>
+				</AnimatePresence>
+			</div>
 		</>
 	);
 };
