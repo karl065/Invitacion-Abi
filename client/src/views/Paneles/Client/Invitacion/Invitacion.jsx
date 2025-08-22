@@ -17,7 +17,7 @@ const Invitacion = () => {
 				<div className="absolute -bottom-10 -right-10 w-40 h-40 bg-pink-200 rounded-full opacity-30 animate-pulse"></div>
 
 				{/* Encabezado */}
-				<h1 className="text-3xl md:text-4xl font-bold text-pink-600 mb-4">
+				<h1 className="text-6xl lg:text-3xl font-bold text-pink-600 mb-4">
 					🌸 Bienvenida 🌸
 				</h1>
 				<h1 className="text-3xl md:text-4xl font-bold text-pink-600 mb-4">
