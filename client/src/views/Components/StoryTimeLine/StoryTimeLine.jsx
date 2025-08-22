@@ -135,7 +135,7 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 
 	// Componente de texto animado
 	const TextContent = () => {
-		if (finished || index === storyEvents.length - 1) return null;
+		if (finished) return null;
 
 		const isFirst = index === 0; // 👈 Verificamos si es la primera escena
 
