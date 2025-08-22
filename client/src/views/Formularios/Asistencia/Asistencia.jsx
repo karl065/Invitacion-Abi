@@ -21,7 +21,7 @@ const Asistencia = ({ onClose }) => {
 			then: (schema) => schema.required('Debe indicar si va solo o acompañado'),
 		}),
 		acompanantes: Yup.number().when('solo', {
-			is: false, // 👈 cuando elige "no" (acompañado)
+			is: false,
 			then: (schema) =>
 				schema
 					.required('Número de acompañantes requerido')
@@ -52,17 +52,17 @@ const Asistencia = ({ onClose }) => {
 	});
 
 	return (
-		<div className="w-full h-full flex items-center justify-center">
-			<div className="items-center justify-center p-2 space-y-2 rounded-lg shadow-2xl h-fit w-fit text-sm">
-				<form className="space-y-4" onSubmit={formik.handleSubmit}>
+		<div className="w-full h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+			<div className="w-full max-w-2xl items-center justify-center p-4 sm:p-6 space-y-4 rounded-lg shadow-2xl text-sm">
+				<form className="space-y-6" onSubmit={formik.handleSubmit}>
 					{/* Nombre y Apellido */}
-					<div className="flex space-x-2">
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						<div className="relative">
 							<input
 								type="text"
 								name="nombre"
 								id="nombre"
-								className={`p-2 shadow-xl rounded-lg focus:border focus:border-secondary-button text-colors ${
+								className={`block w-full form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg  ${
 									formik.touched.nombre && formik.errors.nombre
 										? 'border-red-500'
 										: ''
@@ -73,7 +73,7 @@ const Asistencia = ({ onClose }) => {
 								value={formik.values.nombre}
 							/>
 							{formik.touched.nombre && formik.errors.nombre && (
-								<div className="text-xs text-red-500 absolute top-full">
+								<div className="text-xs text-red-500 mt-1">
 									{formik.errors.nombre}
 								</div>
 							)}
@@ -83,7 +83,7 @@ const Asistencia = ({ onClose }) => {
 								type="text"
 								name="apellido"
 								id="apellido"
-								className={`p-2 shadow-xl rounded-lg focus:border focus:border-secondary-button text-colors ${
+								className={`block w-full form-input p-2 shadow-violet-600 shadow-2xl rounded-lg border-none bg-transparent${
 									formik.touched.apellido && formik.errors.apellido
 										? 'border-red-500'
 										: ''
@@ -94,7 +94,7 @@ const Asistencia = ({ onClose }) => {
 								value={formik.values.apellido}
 							/>
 							{formik.touched.apellido && formik.errors.apellido && (
-								<div className="text-xs text-red-500 absolute top-full">
+								<div className="text-xs text-red-500 mt-1">
 									{formik.errors.apellido}
 								</div>
 							)}
@@ -102,13 +102,13 @@ const Asistencia = ({ onClose }) => {
 					</div>
 
 					{/* Email y Celular */}
-					<div className="flex space-x-2">
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						<div className="relative">
 							<input
 								type="email"
 								name="email"
 								id="email"
-								className={`p-2 shadow-xl rounded-lg focus:border focus:border-secondary-button text-colors ${
+								className={`block w-full form-input p-2 shadow-violet-600 shadow-2xl rounded-lg bg-transparent border-none ${
 									formik.touched.email && formik.errors.email
 										? 'border-red-500'
 										: ''
@@ -119,7 +119,7 @@ const Asistencia = ({ onClose }) => {
 								value={formik.values.email}
 							/>
 							{formik.touched.email && formik.errors.email && (
-								<div className="text-xs text-red-500 absolute top-full">
+								<div className="text-xs text-red-500 mt-1">
 									{formik.errors.email}
 								</div>
 							)}
@@ -129,7 +129,7 @@ const Asistencia = ({ onClose }) => {
 								type="text"
 								name="celular"
 								id="celular"
-								className={`p-2 shadow-xl rounded-lg focus:border focus:border-secondary-button text-colors ${
+								className={`block w-full form-input p-2 rounded-lg shadow-violet-600 shadow-2xl border-none bg-transparent ${
 									formik.touched.celular && formik.errors.celular
 										? 'border-red-500'
 										: ''
@@ -140,7 +140,7 @@ const Asistencia = ({ onClose }) => {
 								value={formik.values.celular}
 							/>
 							{formik.touched.celular && formik.errors.celular && (
-								<div className="text-xs text-red-500 absolute top-full">
+								<div className="text-xs text-red-500 mt-1">
 									{formik.errors.celular}
 								</div>
 							)}
@@ -152,7 +152,7 @@ const Asistencia = ({ onClose }) => {
 						<label className="block text-sm font-medium text-gray-700">
 							¿Asistirá?
 						</label>
-						<div className="flex gap-4 mt-2">
+						<div className="flex flex-wrap gap-4 mt-2">
 							<label className="flex items-center gap-2">
 								<input
 									type="radio"
@@ -160,7 +160,7 @@ const Asistencia = ({ onClose }) => {
 									value="true"
 									checked={formik.values.asistencia === true}
 									onChange={() => formik.setFieldValue('asistencia', true)}
-									className="accent-green-600"
+									className="form-radio accent-green-600"
 								/>
 								Sí
 							</label>
@@ -171,13 +171,13 @@ const Asistencia = ({ onClose }) => {
 									value="false"
 									checked={formik.values.asistencia === false}
 									onChange={() => formik.setFieldValue('asistencia', false)}
-									className="accent-red-600"
+									className="form-radio accent-red-600"
 								/>
 								No
 							</label>
 						</div>
 						{formik.touched.asistencia && formik.errors.asistencia && (
-							<div className="text-xs text-red-500 absolute top-full">
+							<div className="text-xs text-red-500 mt-1">
 								{formik.errors.asistencia}
 							</div>
 						)}
@@ -189,14 +189,14 @@ const Asistencia = ({ onClose }) => {
 							<label className="block text-sm font-medium text-gray-700">
 								¿Asistirá solo?
 							</label>
-							<div className="flex gap-4 mt-2">
+							<div className="flex flex-wrap gap-4 mt-2">
 								<label className="flex items-center gap-2">
 									<input
 										type="radio"
 										name="solo"
 										checked={formik.values.solo === true}
 										onChange={() => formik.setFieldValue('solo', true)}
-										className="accent-blue-600"
+										className="form-radio accent-blue-600"
 									/>
 									Sí
 								</label>
@@ -206,44 +206,46 @@ const Asistencia = ({ onClose }) => {
 										name="solo"
 										checked={formik.values.solo === false}
 										onChange={() => formik.setFieldValue('solo', false)}
-										className="accent-blue-600"
+										className="form-radio accent-blue-600"
 									/>
 									No
 								</label>
 							</div>
 							{formik.touched.solo && formik.errors.solo && (
-								<div className="text-xs text-red-500 absolute top-full">
+								<div className="text-xs text-red-500 mt-1">
 									{formik.errors.solo}
 								</div>
 							)}
 						</div>
 					)}
 
-					{/* --- Número de acompañantes --- */}
-					{formik.values.solo === false && (
-						<div className="relative">
-							<label className="block text-sm font-medium text-gray-700">
-								¿Cuántos acompañantes?
-							</label>
-							<input
-								type="number"
-								name="acompanantes"
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-								value={formik.values.acompanantes}
-								className={`p-2 shadow-xl rounded-lg w-full ${
-									formik.touched.acompanantes && formik.errors.acompanantes
-										? 'border-red-500'
-										: ''
-								}`}
-							/>
-							{formik.touched.acompanantes && formik.errors.acompanantes && (
-								<div className="text-xs text-red-500 absolute top-full">
-									{formik.errors.acompanantes}
-								</div>
-							)}
-						</div>
-					)}
+					{/* Número de acompañantes */}
+					{formik.values.solo === false &&
+						formik.values.asistencia === true && (
+							<div className="relative">
+								<label className="block text-sm font-medium text-gray-700">
+									¿Cuántos acompañantes?
+								</label>
+								<input
+									type="number"
+									name="acompanantes"
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									value={formik.values.acompanantes}
+									className={`block w-full form-input p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
+										formik.touched.acompanantes && formik.errors.acompanantes
+											? 'border-red-500'
+											: ''
+									}`}
+								/>
+								{formik.touched.acompanantes && formik.errors.acompanantes && (
+									<div className="text-xs text-red-500 mt-1">
+										{formik.errors.acompanantes}
+									</div>
+								)}
+							</div>
+						)}
+
 					{/* Regalos */}
 					<div className="relative">
 						<label className="block text-sm font-medium text-gray-700">
@@ -255,14 +257,14 @@ const Asistencia = ({ onClose }) => {
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							value={formik.values.regalos}
-							className={`p-2 shadow-xl rounded-lg w-full ${
+							className={`block w-full form-select p-2 shadow-violet-600 shadow-2xl border-none bg-transparent rounded-lg ${
 								formik.touched.regalos && formik.errors.regalos
 									? 'border-red-500'
 									: ''
 							}`}>
 							<option value="">Seleccione un regalo...</option>
 							{regalos
-								?.filter((regalo) => !regalo.seleccionado && regalo._id) // 👈 solo los no seleccionados
+								?.filter((regalo) => !regalo.seleccionado && regalo._id)
 								.map((regalo) => (
 									<option key={regalo._id} value={regalo._id}>
 										{regalo.nombre}
@@ -270,17 +272,17 @@ const Asistencia = ({ onClose }) => {
 								))}
 						</select>
 						{formik.touched.regalos && formik.errors.regalos && (
-							<div className="text-xs text-red-500 absolute top-full">
+							<div className="text-xs text-red-500 mt-1">
 								{formik.errors.regalos}
 							</div>
 						)}
 					</div>
 
-					{/* Botón de enviar */}
+					{/* Botón */}
 					<div className="flex items-center justify-center">
 						<button
 							type="submit"
-							className="p-2 font-bold shadow-xl uppercase transition-colors rounded-lg bg-secondary-button hover:text-gray-100">
+							className="w-full sm:w-auto px-6 py-2 font-bold shadow-violet-600 shadow-2xl border-none bg-transparent uppercase transition-colors rounded-lg  hover:text-gray-100">
 							Confirmar Asistencia
 						</button>
 					</div>
