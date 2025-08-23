@@ -77,7 +77,7 @@ const storyEvents = [
 			},
 		},
 		story:
-			'Acompañalos a disfrutar de este gran dia, en donde celebran mi !Victoria¡, Ellos te esperan, Confirma enseguida y apoyanos con un detalle...',
+			'Acompañalos a disfrutar de este gran dia, en donde celebran mi !Victoria¡, Ellos te esperan, Confirma enseguida...',
 	},
 ];
 
