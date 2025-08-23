@@ -124,7 +124,7 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 
 			const randomPos = positions[Math.floor(Math.random() * positions.length)];
 			setPosition(randomPos);
-		}, 10000);
+		}, 20000);
 
 		return () => clearInterval(interval);
 	}, [hasCompletedFirstLoop, onFinishFirstLoop]);
