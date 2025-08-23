@@ -1,6 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import angeles from '../../../audios/angeles_fuimos.mp3';
+import escena1 from '../../../audios/Escena1.mp3';
+import escena2 from '../../../audios/Escena2.mp3';
+import escena3 from '../../../audios/Escena3.mp3';
+import escena4 from '../../../audios/Escena4.mp3';
+import escena5 from '../../../audios/Escena5.mp3';
+import escena6 from '../../../audios/Escena6.mp3';
 
 const storyEvents = [
 	{
@@ -12,6 +18,7 @@ const storyEvents = [
 				url: 'https://res.cloudinary.com/dpjeltekx/image/upload/v1755836723/InvitacionAbi/Bra_bebe_en_la_nube_voladora_kr0rig.png',
 			},
 		},
+		narration: escena1,
 	},
 	{
 		title: 'El inicio',
@@ -25,6 +32,7 @@ const storyEvents = [
 		},
 		story:
 			'Como toda guerrera Saiyajin, llegó antes de lo esperado, lista para luchar por su vida.',
+		narration: escena2,
 	},
 	{
 		title: 'La batalla en la incubadora',
@@ -38,10 +46,11 @@ const storyEvents = [
 		},
 		story:
 			'Enfrentó cada día en la incubadora como un entrenamiento en la sala del tiempo, fortaleciendo su espíritu.',
+		narration: escena3,
 	},
 	{
 		title: '¡Victoria!',
-		cardTitle: 'La guerrera sale adelante',
+		cardTitle: '¡La guerrera sale adelante!',
 		cardSubtitle: 'Alta médica',
 		media: {
 			type: 'IMAGE',
@@ -50,7 +59,8 @@ const storyEvents = [
 			},
 		},
 		story:
-			'Después de días de batalla, nuestra pequeña Saiyajin logró lo imposible: ir a casa con nosotros.',
+			'¡Después de días de batalla, nuestra pequeña Saiyajin logró lo imposible: ir a casa con nosotros!',
+		narration: escena4,
 	},
 	{
 		title: 'En casa',
@@ -64,6 +74,7 @@ const storyEvents = [
 		},
 		story:
 			'Ahora, con su armadura invisible y su poder oculto, nos llena de amor y orgullo cada día.',
+		narration: escena5,
 	},
 	{
 		title: 'Estas Invitad@',
@@ -76,7 +87,8 @@ const storyEvents = [
 			},
 		},
 		story:
-			'Acompañalos a disfrutar de este gran dia, en donde celebran mi !Victoria¡, Ellos te esperan, Confirma enseguida...',
+			'Acompáñalos a disfrutar de este gran día, en donde celebran mi ¡Victoria!, Ellos te esperan, Confirma enseguida...',
+		narration: escena6,
 	},
 ];
 
@@ -88,45 +100,43 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 	const [hasCompletedFirstLoop, setHasCompletedFirstLoop] = useState(false);
 	const [finished, setFinished] = useState(false);
 
-	// Ref para el audio
-	const audioRef = useRef(null);
+	const audioRef = useRef(null); // Audio de fondo
+	const narrationRef = useRef(null); // Narración de escena
 	const [isPlaying, setIsPlaying] = useState(false);
 
+	// Audio de fondo en loop
 	useEffect(() => {
-		// Intentar reproducir automáticamente
 		if (audioRef.current) {
-			audioRef.current
-				.play()
-				.then(() => {
-					setIsPlaying(true);
-				})
-				.catch(() => {
-					setIsPlaying(false); // Autoplay bloqueado → botón visible
-				});
+			audioRef.current.volume = 0.2;
+			audioRef.current.play().catch(() => setIsPlaying(false));
 		}
+	}, []);
 
-		const currentDuration = index === 0 ? 10000 : 20000; // 👈 10s si es "Bienvenida", 20s el resto
+	// Control de narración y avance automático
+	useEffect(() => {
+		if (!storyEvents[index].narration) return;
 
-		const timer = setTimeout(() => {
-			setIndex((prev) => {
-				if (prev < storyEvents.length - 1) {
-					return prev + 1;
-				}
-				// Si termina la vuelta por primera vez
-				if (!hasCompletedFirstLoop) {
+		const audio = narrationRef.current;
+		audio.src = storyEvents[index].narration;
+		audio.volume = 1.0;
+		audio.play().catch(() => {});
+
+		const handleEnded = () => {
+			if (index < storyEvents.length - 1) {
+				setIndex((prev) => prev + 1);
+				setPosition(positions[Math.floor(Math.random() * positions.length)]);
+				if (!hasCompletedFirstLoop && index === storyEvents.length - 2) {
 					setHasCompletedFirstLoop(true);
-					if (onFinishFirstLoop) onFinishFirstLoop(); // Avisar al padre
+					if (onFinishFirstLoop) onFinishFirstLoop();
 				}
-				setTimeout(() => setFinished(true), 10000);
-				return prev;
-			});
+			} else {
+				setFinished(true);
+			}
+		};
 
-			const randomPos = positions[Math.floor(Math.random() * positions.length)];
-			setPosition(randomPos);
-		}, currentDuration);
-
-		return () => clearTimeout(timer); // limpiamos el temporizador
-	}, [index, hasCompletedFirstLoop, onFinishFirstLoop]);
+		audio.addEventListener('ended', handleEnded);
+		return () => audio.removeEventListener('ended', handleEnded);
+	}, [index]);
 
 	const toggleAudio = () => {
 		if (!audioRef.current) return;
@@ -134,20 +144,15 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 			audioRef.current.pause();
 			setIsPlaying(false);
 		} else {
-			audioRef.current.play().then(() => {
-				setIsPlaying(true);
-			});
+			audioRef.current.play();
+			setIsPlaying(true);
 		}
 	};
 
 	const current = storyEvents[index];
 
-	// Componente de texto animado
 	const TextContent = () => {
 		if (finished) return null;
-
-		const isFirst = index === 0; // 👈 Verificamos si es la primera escena
-
 		return (
 			<motion.div
 				key={index + position}
@@ -157,41 +162,33 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 				exit={{ opacity: 0, y: -30 }}
 				transition={{ duration: 1.5 }}>
 				<div className="flex items-center justify-center">
-					{isFirst && <h1>🌸 </h1>}
-					<h2
-						className={`${
-							isFirst ? 'text-6xl md:text-5xl' : 'text-6xl md:text-5xl'
-						} font-bold mb-2 text-pink-400 text-shadow-fuchsia-700`}>
-						{/* Las 🌸 ahora se verán igual que el texto */}
+					<h2 className="text-6xl md:text-5xl font-bold mb-2 text-pink-400 text-shadow-fuchsia-700">
 						{current.title}
 					</h2>
-					{isFirst && <h1> 🌸</h1>}
 				</div>
 				<div className="flex items-center justify-center">
-					{isFirst && <h1>🌸 </h1>}
-					<h3
-						className={`${
-							isFirst ? 'text-6xl md:text-5xl' : 'text-5xl md:text-4xl'
-						} mb-1 text-pink-600`}>
+					<h3 className="text-5xl md:text-4xl mb-1 text-pink-600">
 						{current.cardTitle}
 					</h3>
-					{isFirst && <h1> 🌸</h1>}
 				</div>
-				<h4 className="text-5xl md:text-5xl mb-2 text-violet-600">
-					{current.cardSubtitle}
-				</h4>
-				<p className="text-5xl md:text-5xl font-bold text-violet-500">
-					{current.story}
-				</p>
+				{current.cardSubtitle && (
+					<h4 className="text-5xl md:text-5xl mb-2 text-violet-600">
+						{current.cardSubtitle}
+					</h4>
+				)}
+				{current.story && (
+					<p className="text-5xl md:text-5xl font-bold text-violet-500">
+						{current.story}
+					</p>
+				)}
 			</motion.div>
 		);
 	};
 
-	// Componente de imagen animada
 	const ImageContent = () => (
 		<motion.div
 			key={current.media.source.url}
-			className="w-full max-w-md h-64 overflow-hidden rounded-xl shadow-md flex items-center justify-center " // 👈 fuerza mismo tamaño
+			className="w-full max-w-md h-64 overflow-hidden rounded-xl shadow-md flex items-center justify-center"
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
@@ -199,17 +196,16 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 			<img
 				src={current.media.source.url}
 				alt={current.cardTitle}
-				className="w-full h-full object-contain rounded-xl " // 👈 fondo relleno sutil
+				className="w-full h-full object-contain rounded-xl"
 			/>
 		</motion.div>
 	);
 
 	return (
 		<>
-			{/* Audio */}
 			<audio ref={audioRef} src={angeles} loop />
+			<audio ref={narrationRef} />
 
-			{/* 🎛 Botón fijo Play / Pause */}
 			<div className="text-center mb-4">
 				<button
 					className="fixed top-4 right-4 z-50 p-3 rounded-full bg-black/60 text-white shadow-lg hover:bg-black/80 transition"
