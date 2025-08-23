@@ -23,15 +23,15 @@ const NavBar = () => {
 		adminLogoutAction(dispatch, navigate);
 	};
 	return (
-		<div className="border-gray-400 bg-gradient-to-r from-violet-500 from- via-purple-400 via-  flex shadow-lg items-center justify-end">
-			<nav className="flex items-center p-2 gap-x-2">
+		<div className="max-w-screen border-gray-400 bg-gradient-to-r from-violet-500 via-purple-400 flex shadow-lg px-2">
+			<nav className="flex justify-end p-2 w-full ">
 				<Menu
 					menuButton={
 						<MenuButton
 							className={
-								'flex items-center gap-x-2 hover:bg-cyan-200 py-2  px-4 rounded-lg transition-colors'
+								'flex items-center  gap-x-2 hover:bg-cyan-200 py-2 px-3 rounded-lg transition-colors max-w-[200px] sm:max-w-full truncate'
 							}>
-							<span className="text-violet-500 uppercase hover:text-black">
+							<span className="text-violet-500 uppercase hover:text-black truncate">
 								{login?.nombre}
 							</span>
 							<RiArrowDownSLine />

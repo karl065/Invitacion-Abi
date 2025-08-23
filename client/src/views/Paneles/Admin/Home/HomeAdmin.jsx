@@ -5,22 +5,10 @@ const HomeAdmin = () => {
 	const usuarios = useSelector((state) => state.usuarios.usuarios);
 
 	const columns = [
-		{
-			header: 'Nombre',
-			accessorKey: 'nombre',
-		},
-		{
-			header: 'Apellido',
-			accessorKey: 'apellido',
-		},
-		{
-			header: 'Email',
-			accessorKey: 'email',
-		},
-		{
-			header: 'Celular',
-			accessorKey: 'celular',
-		},
+		{ header: 'Nombre', accessorKey: 'nombre' },
+		{ header: 'Apellido', accessorKey: 'apellido' },
+		{ header: 'Email', accessorKey: 'email' },
+		{ header: 'Celular', accessorKey: 'celular' },
 		{
 			header: 'Asistencia',
 			accessorKey: 'asistencia',
@@ -31,29 +19,28 @@ const HomeAdmin = () => {
 			accessorKey: 'solo',
 			cell: ({ getValue }) => (getValue() ? 'Sí' : 'No'),
 		},
-		{
-			header: 'Acompañantes',
-			accessorKey: 'acompanantes',
-		},
-		{
-			header: 'Regalo',
-			accessorFn: (row) => row.regalos?.nombre || '—',
-		},
+		{ header: 'Acompañantes', accessorKey: 'acompanantes' },
+		{ header: 'Regalo', accessorFn: (row) => row.regalos?.nombre || '—' },
 	];
 
 	return (
-		<div className="w-full h-full p-2">
-			<div className="bg-secondary-fondo rounded-lg p-3 x-2 items-center">
-				<h1 className="mb-2 border-gray-100 text-gray-100">
-					Lista de invitados
-				</h1>
-				<hr className="mb-2"></hr>
-				<Tabla
-					columns={columns}
-					data={usuarios}
-					className="max-h-[500px]"
-					firstRowClass="text-violet-300"
-				/>{' '}
+		<div className="p-2 max-w-screen">
+			<div className="rounded-lg p-3 px-2">
+				<h1 className="mb-2 text-gray-100 truncate">Lista de invitados</h1>
+				<hr className="mb-2" />
+
+				{/* Contenedor con scroll horizontal */}
+				<div className="wrap-anywhere md:flex md:justify-center overflow-x-auto">
+					{/* Fuerza ancho mínimo en móvil para activar el scroll */}
+					<div className="min-w-[390px] md:min-w-0 flex justify-center ">
+						<Tabla
+							columns={columns}
+							data={usuarios}
+							className="max-h-[60vh]"
+							firstRowClass="text-violet-300"
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
