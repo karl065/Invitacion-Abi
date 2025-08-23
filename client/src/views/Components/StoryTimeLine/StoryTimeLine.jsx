@@ -106,7 +106,9 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 				});
 		}
 
-		const interval = setInterval(() => {
+		const currentDuration = index === 0 ? 10000 : 20000; // 👈 10s si es "Bienvenida", 20s el resto
+
+		const timer = setTimeout(() => {
 			setIndex((prev) => {
 				if (prev < storyEvents.length - 1) {
 					return prev + 1;
@@ -116,18 +118,16 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 					setHasCompletedFirstLoop(true);
 					if (onFinishFirstLoop) onFinishFirstLoop(); // Avisar al padre
 				}
-
-				clearInterval(interval); // detener al llegar al final
 				setTimeout(() => setFinished(true), 10000);
 				return prev;
 			});
 
 			const randomPos = positions[Math.floor(Math.random() * positions.length)];
 			setPosition(randomPos);
-		}, 20000);
+		}, currentDuration);
 
-		return () => clearInterval(interval);
-	}, [hasCompletedFirstLoop, onFinishFirstLoop]);
+		return () => clearTimeout(timer); // limpiamos el temporizador
+	}, [index, hasCompletedFirstLoop, onFinishFirstLoop]);
 
 	const toggleAudio = () => {
 		if (!audioRef.current) return;
