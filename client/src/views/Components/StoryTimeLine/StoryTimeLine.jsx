@@ -99,21 +99,23 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 	const [position, setPosition] = useState('image-first');
 	const [hasCompletedFirstLoop, setHasCompletedFirstLoop] = useState(false);
 	const [finished, setFinished] = useState(false);
-
-	const audioRef = useRef(null); // Audio de fondo
-	const narrationRef = useRef(null); // Narración de escena
+	const [narrationStarted, setNarrationStarted] = useState(false);
 	const [isPlaying, setIsPlaying] = useState(false);
+
+	const audioRef = useRef(null);
+	const narrationRef = useRef(null);
 
 	// Audio de fondo en loop
 	useEffect(() => {
-		if (audioRef.current) {
+		if (narrationStarted && audioRef.current) {
 			audioRef.current.volume = 0.2;
 			audioRef.current.play().catch(() => setIsPlaying(false));
 		}
-	}, []);
+	}, [narrationStarted]);
 
 	// Control de narración y avance automático
 	useEffect(() => {
+		if (!narrationStarted) return;
 		if (!storyEvents[index].narration) return;
 
 		const audio = narrationRef.current;
@@ -122,21 +124,27 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 		audio.play().catch(() => {});
 
 		const handleEnded = () => {
-			if (index < storyEvents.length - 1) {
-				setIndex((prev) => prev + 1);
-				setPosition(positions[Math.floor(Math.random() * positions.length)]);
-				if (!hasCompletedFirstLoop && index === storyEvents.length - 2) {
-					setHasCompletedFirstLoop(true);
-					if (onFinishFirstLoop) onFinishFirstLoop();
+			setIndex((prevIndex) => {
+				if (prevIndex < storyEvents.length - 1) {
+					const nextIndex = prevIndex + 1;
+					setPosition(positions[Math.floor(Math.random() * positions.length)]);
+
+					if (!hasCompletedFirstLoop && nextIndex === storyEvents.length - 1) {
+						setHasCompletedFirstLoop(true);
+						if (onFinishFirstLoop) onFinishFirstLoop();
+					}
+
+					return nextIndex;
+				} else {
+					setFinished(true);
+					return prevIndex;
 				}
-			} else {
-				setFinished(true);
-			}
+			});
 		};
 
 		audio.addEventListener('ended', handleEnded);
 		return () => audio.removeEventListener('ended', handleEnded);
-	}, [index]);
+	}, [index, narrationStarted, hasCompletedFirstLoop, onFinishFirstLoop]);
 
 	const toggleAudio = () => {
 		if (!audioRef.current) return;
@@ -147,6 +155,10 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 			audioRef.current.play();
 			setIsPlaying(true);
 		}
+	};
+
+	const startNarration = () => {
+		setNarrationStarted(true);
 	};
 
 	const current = storyEvents[index];
@@ -206,15 +218,7 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 			<audio ref={audioRef} src={angeles} loop />
 			<audio ref={narrationRef} />
 
-			<div className="text-center mb-4">
-				<button
-					className="fixed top-4 right-4 z-50 p-3 rounded-full bg-black/60 text-white shadow-lg hover:bg-black/80 transition"
-					onClick={toggleAudio}>
-					{isPlaying ? '⏸ Pausar música' : '▶ Reproducir música'}
-				</button>
-			</div>
-
-			<div className="flex items-center justify-center">
+			<div className="flex flex-col items-center justify-center gap-4">
 				<AnimatePresence mode="wait">
 					<div key={index} className="flex flex-col items-center gap-4">
 						{position === 'text-first' ? (
@@ -230,7 +234,21 @@ const StoryTimeline = ({ onFinishFirstLoop }) => {
 						)}
 					</div>
 				</AnimatePresence>
+
+				{!narrationStarted && (
+					<button
+						className=" bg-pink-500 text-4xl p-2 text-white rounded-lg shadow hover:bg-pink-600 transition"
+						onClick={startNarration}>
+						Inicia la aventura
+					</button>
+				)}
 			</div>
+
+			<button
+				className="fixed top-4 right-4 z-50 p-3 rounded-full bg-black/60 text-white shadow-lg hover:bg-black/80 transition"
+				onClick={toggleAudio}>
+				{isPlaying ? '⏸ Pausar música' : '▶ Reproducir música'}
+			</button>
 		</>
 	);
 };
