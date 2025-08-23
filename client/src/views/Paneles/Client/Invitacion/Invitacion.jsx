@@ -36,7 +36,7 @@ const Invitacion = () => {
 				)}
 			</button>
 
-			<div className="flex justify-center items-center flex-col bg-violet-300 rounded-2xl shadow-lg space-y-4 p-2 w-full h-full border-4 border-pink-200 relative overflow-hidden">
+			<div className="flex justify-center items-center flex-col bg-violet-300 rounded-2xl shadow-lg space-y-4 p-2 w-full h-full border-4 border-pink-200 relative overflow-auto">
 				{/* Decoración de globos */}
 				<div className="absolute -top-8 -left-8 w-32 h-32 bg-pink-300 rounded-full opacity-30 animate-bounce"></div>
 
