@@ -11,7 +11,7 @@ const DetallesEvento = () => {
 	}, []);
 
 	return (
-		<div className="flex items-center min-w-full justify-center p-4 rounded-xl shadow-2xl mb-6 bg-none">
+		<div className="flex items-center w-full justify-center p-4 rounded-xl shadow-2xl mb-6 bg-none">
 			<div dir="ltr">
 				<div className="flex flex-col w-25 border-1 border-pink-300 h-70 items-center justify-center p-2 rounded-s-2xl">
 					<h2>📅</h2>
@@ -35,7 +35,7 @@ const DetallesEvento = () => {
 					) : (
 						<>
 							<h2>👇</h2>
-							<h2 className="text-4xl"> Ver ubicacion</h2>
+							<h2 className="text-4xl"> Ver ubicación</h2>
 						</>
 					)}
 				</a>
@@ -43,7 +43,7 @@ const DetallesEvento = () => {
 			<div dir="rtl">
 				<div className="flex flex-col w-25 items-center justify-center border-1 h-70 border-pink-300 p-2 rounded-s-2xl">
 					<h2>⏰</h2>
-					<p className="text-2xl font-semibold text-pink-700">Hora</p>
+					<p className="text-2xl font-bold text-pink-700">Hora</p>
 					<p className="text-4xl font-bold">4:00 PM</p>
 				</div>
 			</div>

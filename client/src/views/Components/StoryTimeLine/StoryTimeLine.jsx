@@ -1,4 +1,3 @@
-// StoryTimeline.jsx
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import angeles from '../../../audios/angeles_fuimos.mp3';

@@ -13,7 +13,7 @@ const Invitacion = () => {
 	const [iconType, setIconType] = useState('flowers');
 
 	return (
-		<div className="min-w-screen min-h-screen flex items-center font-tangerine justify-center ">
+		<div className="flex w-screen h-screen p-2 items-center font-tangerine justify-center ">
 			{/* 👇 Flores o Esferas según el estado */}
 			<IconosFlotantes type={iconType} />
 
@@ -36,12 +36,12 @@ const Invitacion = () => {
 				)}
 			</button>
 
-			<div className="bg-violet-300 rounded-2xl shadow-lg space-y-2 p-6 md:p-10 max-w-md w- border-4 border-pink-200 relative overflow-hidden">
+			<div className="flex justify-center items-center flex-col bg-violet-300 rounded-2xl shadow-lg space-y-4 p-2 w-full h-full border-4 border-pink-200 relative overflow-hidden">
 				{/* Decoración de globos */}
 				<div className="absolute -top-8 -left-8 w-32 h-32 bg-pink-300 rounded-full opacity-30 animate-bounce"></div>
 
 				{showDetails && (
-					<>
+					<div className="w-full">
 						<DetallesEvento />
 						{/* Mensaje final */}
 						<p className="text-4xl text-violet-500 italic mb-4">
@@ -53,7 +53,7 @@ const Invitacion = () => {
 							className="inline-block bg-pink-500 text-white p-2 text-4xl rounded-full shadow-md hover:bg-pink-600 transition">
 							Confirmar asistencia 💌
 						</button>
-					</>
+					</div>
 				)}
 				<div className="flex space-x-2 justify-center">
 					{/* Historia dinámica (derecha → izquierda) */}
