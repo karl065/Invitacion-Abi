@@ -272,6 +272,7 @@ const Asistencia = ({ onClose }) => {
 					<div className="flex items-center justify-center">
 						<button
 							type="submit"
+							disabled={!(formik.isValid && formik.dirty)}
 							className="w-full text-4xl sm:w-auto px-6 py-2 font-bold shadow-violet-600 shadow-2xl border-none bg-violet-600 text-pink-300 transition-colors rounded-lg  hover:text-gray-100">
 							Confirmar Asistencia
 						</button>
