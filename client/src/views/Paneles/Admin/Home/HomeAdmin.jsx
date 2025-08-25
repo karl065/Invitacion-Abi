@@ -17,7 +17,7 @@ const HomeAdmin = () => {
 		{
 			header: 'Acompañado',
 			accessorKey: 'solo',
-			cell: ({ getValue }) => (getValue() ? 'Sí' : 'No'),
+			cell: ({ getValue }) => (getValue() ? 'No' : 'Sí'),
 		},
 		{ header: 'Acompañantes', accessorKey: 'acompanantes' },
 		{ header: 'Regalo', accessorFn: (row) => row.regalos?.nombre || '—' },
